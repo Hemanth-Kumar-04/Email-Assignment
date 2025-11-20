@@ -1,0 +1,21 @@
+mailmind-backend/
+├─ package.json
+├─ .env.example
+├─ .gitignore
+├─ README.md
+├─ prisma/
+│  ├─ schema.prisma
+│  └─ seed.js
+├─ src/
+│  ├─ index.js
+│  ├─ prismaClient.js
+│  ├─ services/
+│  │  └─ llmService.js
+│  ├─ data/
+│  │  ├─ mockEmails.json
+│  │  └─ defaultPrompts.json
+│  └─ routes/
+│     ├─ prompts.js
+│     ├─ emails.js
+│     ├─ drafts.js
+│     └─ chat.js

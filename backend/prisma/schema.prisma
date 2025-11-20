@@ -1,0 +1,66 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Prompt {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Email {
+  id          Int          @id @default(autoincrement())
+  sender      String
+  email       String
+  avatar      String?
+  subject     String
+  body        String
+  timestamp   String?
+  date        String?
+  read        Boolean     @default(false)
+  category    String?
+  processed   Boolean     @default(false)
+  actionItems ActionItem[]
+  drafts      Draft[]
+  chats       ChatMessage[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+model ActionItem {
+  id        Int      @id @default(autoincrement())
+  email     Email    @relation(fields: [emailId], references: [id], onDelete: Cascade)
+  emailId   Int
+  task      String
+  priority  String
+  metadata  String?
+  createdAt DateTime @default(now())
+}
+
+model Draft {
+  id        Int      @id @default(autoincrement())
+  email     Email?   @relation(fields: [emailId], references: [id], onDelete: Cascade)
+  emailId   Int?
+  to        String
+  subject   String
+  body      String
+  metadata  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ChatMessage {
+  id        Int      @id @default(autoincrement())
+  email     Email?   @relation(fields: [emailId], references: [id], onDelete: Cascade)
+  emailId   Int?
+  role      String
+  text      String
+  createdAt DateTime @default(now())
+}

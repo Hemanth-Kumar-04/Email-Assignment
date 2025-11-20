@@ -1,0 +1,5 @@
+{
+  "categorization": "You are an email classifier. Categorize the email into one of these categories ONLY: Important, Work, Newsletter, Spam, Personal, Promotional. Return only the category name exactly as listed.",
+  "actionExtraction": "Extract all actionable tasks from the email. For each task, return: task description, priority (High, Medium, Low). If no tasks, return an empty list.",
+  "replyGeneration": "Write a polite, clear, and concise reply to the email. Your tone should match the sender's context and be professional by default."
+}
