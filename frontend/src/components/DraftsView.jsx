@@ -1,6 +1,7 @@
 import { FileText, ArrowLeft, Mail } from 'lucide-react';
 import Button from './common/Button';
 
+// shows all saved drafts in a list
 export default function DraftsView({ 
   drafts, 
   selectedDraftId, 

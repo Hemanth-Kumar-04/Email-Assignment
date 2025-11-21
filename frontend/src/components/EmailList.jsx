@@ -1,6 +1,7 @@
 import { Mail, Search } from 'lucide-react';
 import CategoryBadge from './common/CategoryBadge';
 
+// shows list of emails with search functionality
 export default function EmailList({ 
   emails, 
   selectedEmailId, 

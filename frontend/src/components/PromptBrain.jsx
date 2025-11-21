@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Brain, Edit2, Save, X } from 'lucide-react';
 import Button from './common/Button';
 
+// lets users edit AI prompt templates
 export default function PromptBrain({ prompts, onUpdatePrompt, loading }) {
   const [editingPrompt, setEditingPrompt] = useState(null);
   const [editedContent, setEditedContent] = useState('');

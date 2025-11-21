@@ -1,6 +1,6 @@
 const API_BASE = import.meta.env.DEV ? 'http://localhost:8000/api' : '/api';
 
-// Helper to call backend API
+// wrapper function to make api calls easier
 async function callAPI(endpoint, options = {}) {
   try {
     const response = await fetch(`${API_BASE}${endpoint}`, {

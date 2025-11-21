@@ -2,9 +2,10 @@ const prisma = require('../prismaClient');
 const mockEmails = require('../data/mockEmails.json');
 const defaultPrompts = require('../data/defaultPrompts.json');
 
-// Delete all data
+// wipes out all data from database
 exports.deleteAll = async (req, res) => {
   try {
+    // deleting in order to avoid foreign key issues
     await prisma.chatMessage.deleteMany();
     await prisma.draft.deleteMany();
     await prisma.actionItem.deleteMany();
@@ -23,10 +24,10 @@ exports.deleteAll = async (req, res) => {
   }
 };
 
-// Seed database
+// loads default prompts and emails into database
 exports.seed = async (req, res) => {
   try {
-    // Seed prompts if not exist
+    // upsert means create if new, update if exists
     for (const [name, content] of Object.entries(defaultPrompts)) {
       await prisma.prompt.upsert({
         where: { name },
@@ -67,10 +68,10 @@ exports.seed = async (req, res) => {
   }
 };
 
-// Full reset (delete + seed)
+// deletes everything and then reseeds with fresh data
 exports.full = async (req, res) => {
   try {
-    // Delete all
+    // clean slate first
     await prisma.chatMessage.deleteMany();
     await prisma.draft.deleteMany();
     await prisma.actionItem.deleteMany();

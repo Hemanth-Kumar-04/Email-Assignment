@@ -1,18 +1,16 @@
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
-// loading multiple api keys to rotate for round robbin
+// using multiple api keys so we don't hit rate limits
 const apiKeys = [
   process.env.GEMINI_API_KEY_1,
   process.env.GEMINI_API_KEY_2,
   process.env.GEMINI_API_KEY_3
-].filter(key => key && key !== "your-second-api-key-here" && key !== "your-third-api-key-here"); // Remove undefined/null/placeholder keys
+].filter(key => key && key !== "your-second-api-key-here" && key !== "your-third-api-key-here");
 
 let currentKeyIndex = 0;
-
-
 const failedKeys = new Set();
 
-//  Get next valid API key using round-robin strategy
+// rotates through api keys to spread the load
 function getNextApiKey() {
   if (apiKeys.length === 0) {
     throw new Error("No Gemini API keys configured in .env file");
@@ -41,7 +39,7 @@ function markKeyAsFailed(key) {
   console.error(`API key ending with ...${key.slice(-4)} marked as invalid`);
 }
 
-
+// main function to call google gemini AI
 async function runLLM(prompt, jsonMode = false) {
   const apiKey = getNextApiKey();
   const genAI = new GoogleGenerativeAI(apiKey);

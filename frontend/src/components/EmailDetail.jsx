@@ -2,6 +2,7 @@ import { Mail, MessageSquare, FileText, CheckCircle } from 'lucide-react';
 import CategoryBadge from './common/CategoryBadge';
 import Button from './common/Button';
 
+// displays full email content with action items if any
 export default function EmailDetail({ 
   email, 
   onStartChat, 

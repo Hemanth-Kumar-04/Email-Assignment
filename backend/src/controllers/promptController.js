@@ -1,6 +1,6 @@
 const prisma = require('../prismaClient');
 
-// Get all prompts
+// fetch all prompt templates
 exports.getAllPrompts = async (req, res) => {
   try {
     const prompts = await prisma.prompt.findMany();
@@ -11,7 +11,7 @@ exports.getAllPrompts = async (req, res) => {
   }
 };
 
-// Update a prompt by name
+// user can edit prompt templates here
 exports.updatePrompt = async (req, res) => {
   try {
     const { name } = req.params;

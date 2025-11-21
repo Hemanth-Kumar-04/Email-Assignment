@@ -2,13 +2,14 @@ const prisma = require('../prismaClient');
 const mockEmails = require('../data/mockEmails.json');
 const defaultPrompts = require('../data/defaultPrompts.json');
 
-// Seed emails
+// loads emails from json file into database
 exports.seedEmails = async (req, res) => {
   try {
     let created = 0;
     let updated = 0;
 
     for (const emailData of mockEmails) {
+      // checking if email already exists so we don't duplicate
       const existingEmail = await prisma.email.findFirst({
         where: {
           email: emailData.email,
@@ -52,7 +53,7 @@ exports.seedEmails = async (req, res) => {
   }
 };
 
-// Seed prompts
+// loads AI prompt templates into database
 exports.seedPrompts = async (req, res) => {
   try {
     let created = 0;
@@ -92,7 +93,7 @@ exports.seedPrompts = async (req, res) => {
   }
 };
 
-// Seed all (emails + prompts)
+// seeds both prompts and emails in one go
 exports.seedAll = async (req, res) => {
   try {
     // Seed prompts
@@ -173,7 +174,7 @@ exports.seedAll = async (req, res) => {
   }
 };
 
-// Reset and reseed
+// nuclear option - deletes everything and starts fresh
 exports.resetAndSeed = async (req, res) => {
   try {
     // Delete all data

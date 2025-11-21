@@ -1,8 +1,9 @@
 const prisma = require('../prismaClient');
 
-// Get all emails
+// fetch all emails with their related data
 exports.getAllEmails = async (req, res) => {
   try {
+    // getting emails in reverse order so newest ones show first
     const emails = await prisma.email.findMany({
       include: { actionItems: true, drafts: true, chats: true },
       orderBy: { id: 'desc' }
@@ -14,7 +15,7 @@ exports.getAllEmails = async (req, res) => {
   }
 };
 
-// Get email by ID
+// get a single email by its id
 exports.getEmailById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -34,7 +35,7 @@ exports.getEmailById = async (req, res) => {
   }
 };
 
-// Update email category
+// lets user manually change email category
 exports.updateCategory = async (req, res) => {
   try {
     const { id } = req.params;

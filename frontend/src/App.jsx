@@ -1,10 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Loader2 } from 'lucide-react';
 
-// Import API utilities
 import { emailAPI, draftAPI, promptAPI, chatAPI, ingestAPI, resetAPI } from './utils/api';
 
-// Import components
 import Sidebar from './components/Sidebar';
 import EmailList from './components/EmailList';
 import EmailDetail from './components/EmailDetail';
@@ -14,7 +12,7 @@ import PromptBrain from './components/PromptBrain';
 
 
 function App() {
-  // State management
+  // holding all our app state here
   const [emails, setEmails] = useState([]);
   const [selectedEmailId, setSelectedEmailId] = useState(null);
   const [view, setView] = useState('inbox');
@@ -31,7 +29,7 @@ function App() {
   const [selectedDraftId, setSelectedDraftId] = useState(null);
   const [emailDrafts, setEmailDrafts] = useState({}); // Store draft text per email ID
 
-  // Load data from backend on mount
+  // fetches everything we need from backend when app loads
   const loadData = async () => {
     setLoading(true);
     try {
@@ -105,7 +103,7 @@ function App() {
   };
 
   const handleSelectEmail = (emailId) => {
-    // Save current draft before switching
+    // saving current draft before switching to avoid losing work
     if (selectedEmailId && draftText) {
       setEmailDrafts(prev => ({ ...prev, [selectedEmailId]: draftText }));
     }

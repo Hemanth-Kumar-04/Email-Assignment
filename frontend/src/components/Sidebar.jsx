@@ -2,6 +2,7 @@ import { Inbox, FileText, Brain, Trash2, Database, RefreshCw } from 'lucide-reac
 import Button from './common/Button';
 import { categoryColors } from '../utils/constants';
 
+// left sidebar with navigation and action buttons
 export default function Sidebar({ 
   activeView, 
   onViewChange, 

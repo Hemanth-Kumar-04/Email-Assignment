@@ -4,10 +4,10 @@ const mockEmails = require('../data/mockEmails.json');
 
 const BATCH_SIZE = 5;
 
-// Process inbox emails
+// this processes all emails through AI to categorize and extract tasks
 exports.processInbox = async (req, res) => {
   try {
-    // Fetch prompts from database
+    // need these prompts to tell AI what to do
     const categorizationPrompt = await prisma.prompt.findUnique({
       where: { name: "categorization" }
     });
@@ -22,10 +22,10 @@ exports.processInbox = async (req, res) => {
       });
     }
 
-    // Clear existing emails
+    // clear old emails first
     await prisma.email.deleteMany();
 
-    // Process in batches
+    // processing in batches of 5 to avoid hitting API limits
     const totalBatches = Math.ceil(mockEmails.length / BATCH_SIZE);
     let processedCount = 0;
 

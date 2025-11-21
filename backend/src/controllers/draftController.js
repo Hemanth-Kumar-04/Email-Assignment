@@ -1,7 +1,7 @@
 const prisma = require('../prismaClient');
 const { runLLM } = require('../services/llmService');
 
-// Get all drafts
+// get all saved drafts
 exports.getAllDrafts = async (req, res) => {
   try {
     const drafts = await prisma.draft.findMany({
@@ -9,7 +9,7 @@ exports.getAllDrafts = async (req, res) => {
       orderBy: { createdAt: 'desc' }
     });
     
-    // Clean up duplicate drafts (keep only latest per email)
+    // removing duplicates since we only want latest draft per email
     const seenEmails = new Set();
     const uniqueDrafts = drafts.filter(draft => {
       if (draft.emailId && seenEmails.has(draft.emailId)) {
@@ -26,7 +26,7 @@ exports.getAllDrafts = async (req, res) => {
   }
 };
 
-// Create a new draft
+// generate a draft reply using AI
 exports.createDraft = async (req, res) => {
   try {
     const { emailId } = req.body;
@@ -43,12 +43,12 @@ exports.createDraft = async (req, res) => {
       return res.status(404).json({ error: 'Email not found' });
     }
 
-    // Delete existing drafts for this email to avoid duplicates
+    // clean up old drafts before creating new one
     await prisma.draft.deleteMany({
       where: { emailId: parseInt(emailId) }
     });
 
-    // Fetch reply generation prompt from database
+    // get the prompt template from database
     const replyPrompt = await prisma.prompt.findUnique({
       where: { name: 'replyGeneration' }
     });

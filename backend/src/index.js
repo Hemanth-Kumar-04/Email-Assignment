@@ -21,7 +21,7 @@ app.use(cors());
 app.use(express.json({ limit: "1mb" }));
 app.use(morgan("dev"));
 
-// auto-seeding DB on first run
+// automatically seeds database on first startup if empty
 async function autoSeed() {
   const promptCount = await prisma.prompt.count();
   const emailCount = await prisma.email.count();

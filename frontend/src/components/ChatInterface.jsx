@@ -1,6 +1,7 @@
 import { Send, FileText, MessageSquare, Sparkles } from 'lucide-react';
 import Button from './common/Button';
 
+// handles both chat and draft editing modes
 export default function ChatInterface({ 
   email,
   mode,

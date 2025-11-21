@@ -1,7 +1,7 @@
 const prisma = require('../prismaClient');
 const { runLLM } = require('../services/llmService');
 
-// Send a chat message about an email
+// handles chat messages about a specific email
 exports.sendMessage = async (req, res) => {
   try {
     const { id } = req.params;
@@ -29,7 +29,7 @@ exports.sendMessage = async (req, res) => {
       }
     });
 
-    // Generate AI response
+    // building the context for AI so it knows what email we're talking about
     const prompt = `You are an email assistant. Answer questions about this email:
 
 Subject: ${email.subject}
