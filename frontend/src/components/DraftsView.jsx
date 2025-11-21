@@ -62,21 +62,47 @@ export default function DraftsView({
         </div>
       </div>
       
-      <div className="flex-1 p-6">
+      <div className="flex-1 p-6 overflow-y-auto">
         {selectedDraft ? (
-          <div>
-            <div className="mb-4 pb-4 border-b">
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">
-                {selectedDraft.subject || 'Draft Reply'}
-              </h2>
-              <div className="text-sm text-gray-600">
-                {selectedDraft.to && `To: ${selectedDraft.to}`}
+          <div className="space-y-6">
+          
+            {selectedDraft.email && (
+              <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                <h3 className="text-sm font-semibold text-gray-600 mb-3 uppercase tracking-wide">
+                  Original Message
+                </h3>
+                <div className="mb-3 pb-3 border-b border-gray-300">
+                  <p className="text-sm text-gray-600">
+                    <span className="font-semibold">From:</span> {selectedDraft.email.sender}
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    <span className="font-semibold">Subject:</span> {selectedDraft.email.subject}
+                  </p>
+                </div>
+                <p className="whitespace-pre-wrap text-sm text-gray-700">
+                  {selectedDraft.email.body || 'No content available'}
+                </p>
               </div>
-            </div>
-            <div className="prose max-w-none">
-              <p className="whitespace-pre-wrap text-gray-700">
-                {selectedDraft.body || 'No content available'}
-              </p>
+            )}
+
+          
+            <div>
+              <h3 className="text-sm font-semibold text-gray-900 mb-3 uppercase tracking-wide">
+                Your Draft Reply
+              </h3>
+              <div className="mb-4 pb-4 border-b">
+                <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                  {selectedDraft.subject || 'Draft Reply'}
+                </h2>
+                <div className="text-sm text-gray-600">
+                  {selectedDraft.to && `To: ${selectedDraft.to}`}
+                </div>
+              </div>
+              <div className="prose max-w-none">
+                <p className="whitespace-pre-wrap text-gray-700">
+                  {selectedDraft.body || 'No content available'}
+                </p>
+              </div>
             </div>
           </div>
         ) : (

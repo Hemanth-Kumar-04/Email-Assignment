@@ -49,6 +49,8 @@ export default function EmailDetail({
             <div className="flex items-center space-x-4 text-sm text-gray-600">
               <span className="font-medium">{email.sender}</span>
               <span>•</span>
+              <span>{email.email}</span>
+              <span>•</span>
               <span>{formatEmailDate(email.date, email.timestamp)}</span>
             </div>
           </div>
