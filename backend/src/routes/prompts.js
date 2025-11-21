@@ -1,16 +1,13 @@
 const express = require("express");
-const prisma = require("../prismaClient");
-
 const router = express.Router();
+const promptController = require('../controllers/promptController');
 
 // getting all prompts
-router.get("/", async (req, res) => {
-  const prompts = await prisma.prompt.findMany();
-  res.json(prompts);
-});
+router.get("/", promptController.getAllPrompts);
 
 // getting a single prompt by name
 router.get("/:name", async (req, res) => {
+  const prisma = require("../prismaClient");
   const prompt = await prisma.prompt.findUnique({
     where: { name: req.params.name },
   });
@@ -18,14 +15,6 @@ router.get("/:name", async (req, res) => {
 });
 
 // updating so using put to create prompt
-router.put("/:name", async (req, res) => {
-  const { content } = req.body;
-  const updatedPrompt = await prisma.prompt.upsert({
-    where: { name: req.params.name },
-    update: { content },
-    create: { name: req.params.name, content },
-  });
-  res.json(updatedPrompt);
-});
+router.put("/:name", promptController.updatePrompt);
 
 module.exports = router;
