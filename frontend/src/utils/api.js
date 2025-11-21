@@ -1,4 +1,4 @@
-const API_BASE = import.meta.env.DEV ? 'http://localhost:8000/api' : '/api';
+const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api';
 
 // wrapper function to make api calls easier
 async function callAPI(endpoint, options = {}) {
