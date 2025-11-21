@@ -2,6 +2,23 @@ import { Mail, MessageSquare, FileText, CheckCircle } from 'lucide-react';
 import CategoryBadge from './common/CategoryBadge';
 import Button from './common/Button';
 
+// format date with fallback for invalid dates
+function formatEmailDate(date, timestamp) {
+  try {
+    if (date) {
+      // create a valid date string, ignoring the time part for now
+      return new Date(date).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+      }) + (timestamp ? ` at ${timestamp}` : '');
+    }
+    return 'Date unavailable';
+  } catch (e) {
+    return 'Date unavailable';
+  }
+}
+
 // displays full email content with action items if any
 export default function EmailDetail({ 
   email, 
@@ -32,7 +49,7 @@ export default function EmailDetail({
             <div className="flex items-center space-x-4 text-sm text-gray-600">
               <span className="font-medium">{email.sender}</span>
               <span>•</span>
-              <span>{new Date(email.timestamp).toLocaleString()}</span>
+              <span>{formatEmailDate(email.date, email.timestamp)}</span>
             </div>
           </div>
           {email.category && (

@@ -52,7 +52,9 @@ export default function DraftsView({
                   {draft.body ? draft.body.substring(0, 100) : 'No content'}...
                 </div>
                 <div className="text-xs text-gray-400 mt-1">
-                  {new Date(draft.createdAt).toLocaleString()}
+                  {draft.createdAt
+                    ? new Date(draft.createdAt).toLocaleString()
+                    : 'Date unavailable'}
                 </div>
               </button>
             ))
