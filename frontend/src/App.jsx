@@ -56,7 +56,7 @@ function App() {
     loadData();
   }, []);
 
-  // Set default chat mode to 'chat' when email is selected
+  // set default chat mode to 'chat' when email is selected
   useEffect(() => {
     if (selectedEmailId && !chatMode) {
       setChatMode('chat');
@@ -65,7 +65,7 @@ function App() {
 
   const selectedEmail = emails.find(e => e.id === selectedEmailId);
 
-  // Handlers
+  // handlers
   const handleProcessInbox = async () => {
     setProcessing(true);
     try {
@@ -108,14 +108,14 @@ function App() {
       setEmailDrafts(prev => ({ ...prev, [selectedEmailId]: draftText }));
     }
     
-    // Switch to new email
+    // switch to new email
     setSelectedEmailId(emailId);
     
-    // Load draft for new email if exists
+    // load draft for new email if exists
     setDraftText(emailDrafts[emailId] || '');
     
-    // Clear chat
-    setChatMode(null);
+    // reset to chat mode always
+    setChatMode('chat');
     setChatHistory([]);
   };
 
@@ -177,7 +177,7 @@ function App() {
       await draftAPI.create(selectedEmail.id, draftText);
       setEmailDrafts(prev => ({ ...prev, [selectedEmail.id]: draftText }));
       
-      // Reload drafts list
+      // reload drafts list
       const draftsData = await draftAPI.getAll();
       setDrafts(draftsData || []);
     } catch (error) {
@@ -188,13 +188,13 @@ function App() {
 
   const handleUpdatePrompt = async (promptId, newContent) => {
     try {
-      // Find prompt name by ID
+      // find prompt name by ID
       const prompt = prompts.find(p => p.id === promptId);
       if (!prompt) return;
       
       await promptAPI.update(prompt.name, newContent);
       
-      // Reload prompts
+      // reload prompts
       const updatedPrompts = await promptAPI.getAll();
       setPrompts(updatedPrompts || []);
     } catch (error) {
@@ -204,7 +204,7 @@ function App() {
   };
 
   const handleBackFromChat = () => {
-    // Save draft if in draft mode
+    // save the draft if in draft mode
     if (chatMode === 'draft' && selectedEmailId && draftText) {
       setEmailDrafts(prev => ({ ...prev, [selectedEmailId]: draftText }));
     }
@@ -218,7 +218,7 @@ function App() {
     setSelectedDraftId(null);
   };
 
-  // Render loading state
+  // rendering loading state
   if (loading) {
     return (
       <div className="h-screen bg-gray-50 flex items-center justify-center">
@@ -230,7 +230,7 @@ function App() {
     );
   }
 
-  // Render main application
+  // rendering main application
   return (
     <div className="h-screen bg-gray-50 flex">
       <Sidebar

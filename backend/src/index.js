@@ -11,7 +11,6 @@ const emailsRouter = require('./routes/emails');
 const draftsRouter = require('./routes/drafts');
 const chatRouter = require('./routes/chat');
 const ingestRouter = require('./routes/ingest');
-const seedRouter = require('./routes/seed');
 const resetRouter = require('./routes/reset');
 
 const app = express();
@@ -37,7 +36,7 @@ async function autoSeed() {
     console.log(" Default prompts seeded.");
   }
 
-  // Seeding emails
+  // seeding emails
   if (emailCount === 0) {
     const emails = JSON.parse(
       fs.readFileSync(path.join(__dirname, "data/mockEmails.json"))
@@ -49,13 +48,12 @@ async function autoSeed() {
   }
 }
 
-app.use("/api/prompts", promptsRouter);
-app.use("/api/emails", emailsRouter);
-app.use("/api/drafts", draftsRouter);
-app.use("/api/chat", chatRouter);
-app.use("/api/ingest", ingestRouter);
-app.use("/api/seed", seedRouter);
-app.use("/api/reset", resetRouter);
+app.use("/api/prompts", promptsRouter);//working
+app.use("/api/emails", emailsRouter);//working
+app.use("/api/drafts", draftsRouter);//wrkng
+app.use("/api/chat", chatRouter);//working
+app.use("/api/ingest", ingestRouter);//workng
+app.use("/api/reset", resetRouter);//working
 
 app.get("/health", (req, res) => res.json({ status: "OK" }));
 
